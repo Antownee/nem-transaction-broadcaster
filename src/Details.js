@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 import {
     Col,
     ControlLabel,
@@ -62,7 +61,7 @@ class Details extends Component {
         var mainDiv = (
             <div className="details-container">
                 <Col xs={6} md={6} className="form-container">
-                    <FormGroup controlId="">
+                    <FormGroup>
                         <ControlLabel>Signed Transaction</ControlLabel>
                         <FormControl name="signedTransaction" id="signedTransaction" componentClass="textarea" placeholder="Paste the signed transaction" onChange={this.handleInputChange.bind(this)} />
                     </FormGroup>
