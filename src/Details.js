@@ -10,13 +10,15 @@ import {
 import axios from 'axios';
 
 
-const nodeURL = "http://bob.nem.ninja:7890/transaction/announce";
+const nodeURL = "http://nkbase.ronel.li:6890/transaction/announce";
 
 class Details extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            signedTransaction: ""
+            signedTransaction: "",
+            successDiv: false,
+            successMessage: ""
         };
     }
     handleInputChange(e) {
@@ -38,19 +40,31 @@ class Details extends Component {
         }
         axios.post(nodeURL, st, config)
             .then((response) => {
-                console.log(response);
+                if (response.data.message === "SUCCESS") {
+                    //Load successful message
+                    //response.data.transactionHash.data
+                    this.setState({
+                        successDiv: true,
+                        successMessage: response.data.transactionHash.data
+                    });
+                }
             }).catch((error) => {
                 var obj = error.response.data;
                 console.log(obj);
-            })
+            });
+    }
+    closeSuccess(){
+        this.setState({
+            successDiv: false
+        });
     }
     render() {
-        return (
+        var mainDiv = (
             <div className="details-container">
                 <Col xs={6} md={6} className="form-container">
                     <FormGroup controlId="">
                         <ControlLabel>Signed Transaction</ControlLabel>
-                        <FormControl name="signedTransaction" componentClass="textarea" placeholder="Paste the signed transaction" onChange={this.handleInputChange.bind(this)} />
+                        <FormControl name="signedTransaction" id="signedTransaction" componentClass="textarea" placeholder="Paste the signed transaction" onChange={this.handleInputChange.bind(this)} />
                     </FormGroup>
                     <Button bsStyle="success" onClick={this.broadcastTransaction.bind(this)} >
                         Broadcast transaction
@@ -58,9 +72,23 @@ class Details extends Component {
                 </Col>
             </div>
         );
-
+        if (!this.state.successDiv){
+            return mainDiv
+        } else {
+            return <Success message={this.state.successMessage} closeDiv={this.closeSuccess.bind(this)}/>;
+        }
     }
 
 }
+
+const wellStyles = { maxWidth: 400, margin: '50px auto 10px', padding: '50px' };
+const pStyle = { margin: '20px 0px'};
+
+const Success = (props) => 
+    <div className="well" style={wellStyles}>
+        <Button bsStyle="success" bsSize="large" block onClick={props.closeDiv}>Success!</Button>
+        <p style={pStyle}>{props.message}</p>
+    </div>
+
 
 export default Details;
