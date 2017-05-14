@@ -1,0 +1,45 @@
+.App {
+    text-align: center;
+}
+
+.App-logo {
+    height: 80px;
+}
+
+.App-header {
+    background-color: #222;
+    height: 200px;
+    padding: 20px;
+    color: white;
+}
+
+.App-intro {
+    font-size: large;
+}
+
+@keyframes App-logo-spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.form-container {
+    float: none;
+    margin: 0 auto;
+}
+
+.details-container {
+    margin-top: 30px;
+}
+
+.qr {
+    float: none;
+    margin: 0 auto;
+}
+
+#signedtxtextarea {
+    height: 160px;
+}
